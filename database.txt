@@ -1,0 +1,3 @@
+database: id21733251_db_autofishfeeder
+username: id21733251_root
+password: Plmokn098*

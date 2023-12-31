@@ -1,0 +1,169 @@
+#clock {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#clock:hover {
+    background-color: #555;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: #333; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: visible;
+    max-height: 100vh;
+}
+
+.schedule-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.schedule-info {
+    flex-grow: 1;
+}
+
+.add-schedule-button {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.button-container {
+    display: flex;
+    margin-left: 10px;
+}
+
+button.delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: rgba(236, 240, 241, 0.8);
+    padding: 15px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+li:hover {
+    background-color: rgba(210, 215, 217, 0.8);
+}
+
+li button {
+    padding: 8px 12px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.time-picker,
+.event-size {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    color: #333;
+}
+
+input,
+select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.feed-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.feed-text {
+    font-size: 24px;
+    color: #3498db;
+    margin-right: 15px;
+}
+
+.button-container {
+    display: flex;
+}
+
+.send-message-button {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #3498db;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-right: 5px;
+}
+
+.send-message-button:last-child {
+    margin-right: 0;
+}
+
+.send-message-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background-color: #2ecc71;
+}

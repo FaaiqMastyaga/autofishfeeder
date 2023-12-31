@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Interactive Time Schedule</title>
+</head>
+<body>
+    <div id="clock">Current Time: Loading...</div>
+    <div class="wrapper">
+        <div class="schedule-container">
+            <h2>Set Schedule</h2>
+            <div class="time-picker">
+                <label for="time">Select Time:</label>
+                <input type="time" id="time">
+            </div>
+    
+            <div class="event-size">
+                <label for="size">Select Size:</label>
+                <select id="size">
+                    <option value="small">small</option>
+                    <option value="medium">medium</option>
+                    <option value="large">large</option>
+                </select>
+            </div>
+            <button class="add-schedule-button" onclick="import('./js/schedule.js').then((module) => module.addSchedule())">Add Schedule</button>
+            <ul id="scheduleList"></ul>
+        </div>
+        <div class="feed-container">
+            <h2 class="feed-text">FEED NOW!</h2>
+            <div class="button-container">
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('small'))">small</button>
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('medium'))">medium</button>
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('large'))">large</button>
+        </div>
+    </div>
+    <script type="module" src="js/clock.js" defer></script>
+    <script type="module" src="js/schedule.js" defer></script>
+    <script type="module" src="js/main.js" defer></script>
+</body>
+</html>
