@@ -4,6 +4,7 @@ async function addSchedule() {
     const timeInput = document.getElementById('time');
     const sizeInput = document.getElementById('size');
 
+    const action = "add_schedule";
     const time = timeInput.value.trim();
     const size = sizeInput.value;
     
@@ -12,12 +13,12 @@ async function addSchedule() {
         return;
     }
 
-    const response = await fetch('./php/add_schedule.php', {
+    const response = await fetch('./php/outputs.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `time=${time}&size=${size}`,
+        body: `action=${action}&time=${time}&size=${size}`,
     });
     
     if (response.ok) {
@@ -32,12 +33,14 @@ async function addSchedule() {
 }
 
 async function deleteSchedule(id) {
-    const response = await fetch('./php/delete_schedule.php', {
+    const action = "delete_schedule";
+
+    const response = await fetch('./php/outputs.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `id=${id}`,
+        body: `action=${action}&id=${id}`,
     });
     
     if (response.ok) {
@@ -49,42 +52,49 @@ async function deleteSchedule(id) {
 }
 
 async function displaySchedule() {
+    const action = "get_schedule";
+
     const scheduleList = document.getElementById('scheduleList');
     scheduleList.innerHTML = '';
 
-    const response = await fetch('./php/get_schedule.php', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
+    const xhr = new XMLHttpRequest();
+    const url = `./php/outputs.php?action=${action}`;
 
-    if (response.ok) {
-        const schedule = await response.json();
-        schedule.forEach(event => {
-            // // Create list and its element
-            const listItem = document.createElement('li');
-            const eventInfo = document.createElement("div");
-            const buttonContainer = document.createElement("div");
-            const deleteButton = document.createElement("button");
-    
-            eventInfo.textContent = `Pukul ${event.time} - Size: ${event.size}`;
-    
-            buttonContainer.classList.add("button-container");
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                const schedule = JSON.parse(xhr.responseText);
+                schedule.forEach(event => {
+                    // // Create list and its element
+                    const listItem = document.createElement('li');
+                    const eventInfo = document.createElement("div");
+                    const buttonContainer = document.createElement("div");
+                    const deleteButton = document.createElement("button");
             
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("delete-button");
-            deleteButton.onclick = () => {
-                deleteSchedule(event.id);
-            };
+                    eventInfo.textContent = `Pukul ${event.time} - Size: ${event.size}`;
             
-            listItem.appendChild(eventInfo);
-            listItem.appendChild(buttonContainer);
-            buttonContainer.appendChild(deleteButton);
-        
-            scheduleList.appendChild(listItem);
-        });
-    } else {
-        console.error('Failed to fetch schedule');
-    }
+                    buttonContainer.classList.add("button-container");
+                    
+                    deleteButton.textContent = "Delete";
+                    deleteButton.classList.add("delete-button");
+                    deleteButton.onclick = () => {
+                        deleteSchedule(event.id);
+                    };
+                    
+                    listItem.appendChild(eventInfo);
+                    listItem.appendChild(buttonContainer);
+                    buttonContainer.appendChild(deleteButton);
+                
+                    scheduleList.appendChild(listItem);
+                });
+            } else {
+                console.error('Failed to fetch schedule');
+            } 
+        }
+    };
+
+    xhr.send();
 }
