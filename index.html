@@ -30,9 +30,9 @@
         <div class="feed-container">
             <h2 class="feed-text">FEED NOW!</h2>
             <div class="button-container">
-                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('small'))">small</button>
-                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('medium'))">medium</button>
-                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.sendMessage('large'))">large</button>
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.updateFeedingLog('small'))">small</button>
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.updateFeedingLog('medium'))">medium</button>
+                <button class="send-message-button" onclick="import('./js/main.js').then((module) => module.updateFeedingLog('large'))">large</button>
         </div>
     </div>
     <script type="module" src="js/clock.js" defer></script>

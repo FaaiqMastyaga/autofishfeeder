@@ -3,8 +3,8 @@
 
     $action = $id = $time = $size = "";
 
-    if ($_SERVER("REQUEST METHOD") == "POST") {
-        $action = $_POST["action"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $action = test_input($_POST["action"]);
 
         if ($action == "add_schedule") {
             $time = $_POST['time'];
@@ -27,11 +27,8 @@
         }
     } 
     
-    if ($_SERVER("REQUEST METHOD") == "GET") {
-        $action = $_GET["action"];
-        $action = trim($action);
-        $action = stripslashes($action);
-        $action = htmlspecialchars($action);
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $action = test_input($_GET["action"]);
         
         if ($action == "get_schedule") {
             getSchedule();
@@ -42,5 +39,12 @@
         else {
             echo "Invalid HTTP request.";
         }
+    }
+
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 ?>

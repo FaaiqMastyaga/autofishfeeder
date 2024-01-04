@@ -12,9 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function checkSchedule() {
+    const action = "get_schedule";
     const currentTime = getCurrentTime();
     
-    const response = await fetch('./php/get_schedule.php', {
+    const response = await fetch(`./php/outputs.php?action=${action}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -27,61 +28,23 @@ async function checkSchedule() {
             let scheduleTime = event.time;
             scheduleTime += ':00';
             const size = event.size;
-
-            if (currentTime === scheduleTime) {
-                feed(size);
+    
+            if (currentTime == scheduleTime) {
+                updateFeedingLog(size);
             }
         });
-    }
+    } 
 }
-
-// function updateFeedingLog(size) {
-//     const xhr = new XMLHttpRequest();
-//     const url = "http://192.168.1.100/";
-//     xhr.open("POST", url, true);
-//     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-//     const data = `size=${size}`;
-
-//     xhr.onreadystatechange = function () {
-//         if (xhr.readyState == 4 && xhr.status == 200) {
-//             console.log(xhr.responseText);
-//         }
-//     };
-//     xhr.send(data);
-// }
-
-
-// async function updateFeedingLog(size) {
-//     const url = "https://autofishfeeder.000webhostapp.com/";
-//     const data = new URLSearchParams({ size });
-
-//     try {
-//         const response = await fetch(url, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/x-www-form-urlencoded',
-//             },
-//             body: data,
-//         });
-
-//         if (response.ok) {
-//             alert(`Feeding - size: ${size}`);
-//         } else {
-//             console.error(`Failed to send message to ESP8266. Status code: ${response.status}`);
-//             alert("Failed to feed.");
-//         }
-//     } catch (error) {
-//         console.error(`Error: ${error.message}`);
-//         alert("Failed to feed.");
-//     }
-// }
 
 async function updateFeedingLog(size) {
     const action = "update_feeding_log";
     const date = getCurrentDate();
     const time = getCurrentTime();
     let servo;
+
+    console.log(date);
+    console.log(time);
+    console.log(size);
 
     if (size == "small") {
         servo = 45;
@@ -91,18 +54,20 @@ async function updateFeedingLog(size) {
         servo = 135;
     }
 
-    const response = await fetch('./php/outputs.php', {
+    const response = await fetch(`./php/outputs.php?action=${action}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `action=${action}&${date}&time=${time}&size=${size}&servo=${servo}`,
+        body: `date=${date}&time=${time}&size=${size}&servo=${servo}`,
     });
     
     if (response.ok) {
-        console.log('Successfully feeding');
+        console.log(`Successfully feeding - Size: ${size}`);
+        alert(`Successfully feeding - Size: ${size}`);
         displaySchedule();
     } else {
         console.error('Failed feeding');
+        alert('Failed feeding');
     }
 }
