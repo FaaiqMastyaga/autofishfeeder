@@ -4,6 +4,7 @@ async function addSchedule() {
     const timeInput = document.getElementById('time');
     const sizeInput = document.getElementById('size');
 
+    const action = "add_schedule";
     const time = timeInput.value.trim();
     const size = sizeInput.value;
     
@@ -12,7 +13,7 @@ async function addSchedule() {
         return;
     }
 
-    const response = await fetch('./php/add_schedule.php', {
+    const response = await fetch(`./php/outputs.php?action=${action}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -32,7 +33,9 @@ async function addSchedule() {
 }
 
 async function deleteSchedule(id) {
-    const response = await fetch('./php/delete_schedule.php', {
+    const action = "delete_schedule";
+
+    const response = await fetch(`./php/outputs.php?action=${action}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -49,10 +52,12 @@ async function deleteSchedule(id) {
 }
 
 async function displaySchedule() {
+    const action = "get_schedule";
+
     const scheduleList = document.getElementById('scheduleList');
     scheduleList.innerHTML = '';
 
-    const response = await fetch('./php/get_schedule.php', {
+    const response = await fetch(`./php/outputs.php?action=${action}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
